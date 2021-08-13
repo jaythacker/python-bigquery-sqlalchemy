@@ -657,9 +657,12 @@ class BigQueryDialect(DefaultDialect):
         credentials_path=None,
         location=None,
         credentials_info=None,
+        credentials=None,
         list_tables_page_size=1000,
         *args,
         **kwargs,
+
+
     ):
         super(BigQueryDialect, self).__init__(*args, **kwargs)
         self.arraysize = arraysize
@@ -668,6 +671,7 @@ class BigQueryDialect(DefaultDialect):
         self.location = location
         self.dataset_id = None
         self.list_tables_page_size = list_tables_page_size
+        self.credentials = credentials
 
     @classmethod
     def dbapi(cls):
@@ -713,6 +717,7 @@ class BigQueryDialect(DefaultDialect):
             project_id=project_id,
             location=self.location,
             default_query_job_config=default_query_job_config,
+            personal_credentials=self.credentials
         )
         return ([client], {})
 

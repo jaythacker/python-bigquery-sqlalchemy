@@ -33,6 +33,7 @@ def create_bigquery_client(
     default_query_job_config=None,
     location=None,
     project_id=None,
+    personal_credentials=None
 ):
     default_project = None
 
@@ -50,6 +51,9 @@ def create_bigquery_client(
         default_project = credentials.project_id
     else:
         credentials, default_project = google.auth.default(scopes=SCOPES)
+
+    if personal_credentials:
+        credentials = personal_credentials
 
     if project_id is None:
         project_id = default_project
